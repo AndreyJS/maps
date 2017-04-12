@@ -1,0 +1,53 @@
+$margin-btn: 5px 0;
+$padding-btn: 0 5px;
+$width-btn: 50px;
+$height-btn: 30px;
+$border-btn: 1px solid black;
+
+.menu {
+    margin: auto;
+    width: 350px;   
+}
+.first {
+    display: inline-block;
+    position: relative;    
+    padding: $padding-btn;
+    width: $width-btn;
+    height: $height-btn;
+    border: $border-btn;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+.first-sub {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 5px;
+}
+.second {
+    margin: $margin-btn;
+    padding: $padding-btn;
+    width: $width-btn + 10px;
+    height: $height-btn;
+    border: $border-btn;
+}
+.first:hover .first-sub {
+    display: inline-block;
+}
+.second-sub {
+    display: none;
+    position: absolute;
+    top: 15px;
+    left: $width-btn + 25px;
+}
+.third {
+    margin: $margin-btn;
+    padding: $padding-btn;
+    width: $width-btn + 10px;
+    height: $height-btn;
+    border: $border-btn;
+}
+.second:hover .second-sub {
+    display: inline-block;
+}
