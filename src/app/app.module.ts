@@ -1,28 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MdCardModule, MdInputModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { MapsComponent } from './maps/maps.component';
-import { MenuOnCssComponent } from './menu-on-css/menu-on-css.component';
-
-// modules
-import { ExportCoreModule } from './export-core/export-core.module';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MapsComponent,
-    MenuOnCssComponent
+    MapComponent
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    ExportCoreModule
+    MdCardModule,
+    MdInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
