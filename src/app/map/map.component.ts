@@ -6,12 +6,17 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-
-    public addressArr = [1,2,3];
+    public newAddress;
+    public addressArr = [];
 
     constructor() { }
 
     ngOnInit() {
+    }
+
+    public addAddress() {
+        this.addressArr.push(this.newAddress);
+        this.newAddress = undefined;
     }
 
 }
