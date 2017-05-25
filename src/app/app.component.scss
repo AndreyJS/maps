@@ -42,12 +42,6 @@ html, body {
   box-sizing: inherit;
 }
 
-body, input, button {
-  font-family: Georgia, Helvetica;
-  font-size: 17px;
-  color: #ecf0f1;
-}
-
 h1 {
   text-align: center;
   background-color: #AC5C7E;
@@ -119,18 +113,6 @@ ul {
   background-color: rgba(255, 255, 255, 0.2);
   margin: 50px 0;
   padding: 20px;
-}
-
-input {
-  border: none;
-  outline: none;
-  background-color: #ecf0f1;
-  padding: 10px;
-  color: #942A57;
-  border: 0;
-  margin: 5px 0;
-  display: block;
-  width: 100%;
 }
 
 button {

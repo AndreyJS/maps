@@ -9,12 +9,14 @@ import { DragulaModule } from 'ng2-dragula';
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { DragulaComponent } from './dragula/dragula.component';
+import { Map2Component } from './map2/map2.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    DragulaComponent
+    DragulaComponent,
+    Map2Component
   ],
   imports: [
     BrowserModule,

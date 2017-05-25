@@ -2,23 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 
 @Component({
-    selector: 'app-dragula',
-    templateUrl: './dragula.component.html',
-    styleUrls: ['./dragula.component.scss']
+    selector: 'app-map2',
+    templateUrl: './map2.component.html',
+    styleUrls: ['./map2.component.scss']
 })
-export class DragulaComponent implements OnInit {
-    public many: Array<string> = ['The', 'possibilities', 'are', 'endless!'];
-    public many2: Array<string> = ['Explore', 'them'];
+export class Map2Component implements OnInit {
+    public newAddress;
+    public addressArr = [];
 
-    constructor(private dragulaService: DragulaService) {
-        dragulaService.dropModel.subscribe((value) => {
+    constructor(private DragulaService: DragulaService) {
+        DragulaService.dropModel.subscribe((value) => {
             console.log(value);
             console.log(value.slice(1));
             this.onDropModel(value.slice(1));
         });
-        dragulaService.removeModel.subscribe((value) => {
+        DragulaService.removeModel.subscribe((value) => {
         this.onRemoveModel(value.slice(1));
         });
+    }
+    
+    public addAddress() {
+        this.addressArr.push(this.newAddress);
+        this.newAddress = undefined;
     }
 
     private onDropModel(args) {
@@ -33,5 +38,4 @@ export class DragulaComponent implements OnInit {
 
     ngOnInit() {
     }
-
 }
