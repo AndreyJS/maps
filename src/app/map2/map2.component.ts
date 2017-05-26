@@ -18,7 +18,19 @@ export class Map2Component implements OnInit {
             this.onRemoveModel(value.slice(1));
         });
     }
-    
+
+    // public initMap() {
+    //     var uluru = { lat: -25.363, lng: 131.044 };
+    //     var map = new google.maps.Map(document.getElementById('map'), {
+    //         zoom: 4,
+    //         center: uluru
+    //     });
+    //     var marker = new google.maps.Marker({
+    //         position: uluru,
+    //         map: map
+    //     });
+    // }
+
     public addAddress() {
         this.addressArr.push(this.newAddress);
         this.newAddress = undefined;
