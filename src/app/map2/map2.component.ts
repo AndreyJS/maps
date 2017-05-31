@@ -7,6 +7,10 @@ import { DragulaService } from 'ng2-dragula';
     styleUrls: ['./map2.component.scss']
 })
 export class Map2Component implements OnInit {
+    title: string = 'First map';
+    lat: number = 55.75222;
+    lon: number = 37.61556; 
+
     public newAddress: string;
     public addressArr = [];
 

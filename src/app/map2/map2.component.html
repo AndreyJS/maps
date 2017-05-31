@@ -9,5 +9,12 @@
         </li>
     </ul>
 </div>
-<div id="map" class="map">
-</div>
+<sebm-google-map [latitude]="lat" [longitude]="lon">
+    <sebm-google-map-marker [latitude]="lat" [longitude]="lon" title="marker1" label="A">
+        <sebm-google-map-info-window>
+            My Content<br />
+            can be HTML
+        </sebm-google-map-info-window>
+    </sebm-google-map-marker>
+</sebm-google-map>
+
