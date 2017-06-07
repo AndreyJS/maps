@@ -6,15 +6,16 @@ import { DragulaService } from 'ng2-dragula';
     templateUrl: './map2.component.html',
     styleUrls: ['./map2.component.scss']
 })
+
 export class Map2Component implements OnInit {
     title: string = 'First map';
     lat: number = 55.75222;
-    lon: number = 37.61556; 
-
+    lng: number = 37.61556; 
     public newAddress: string;
     public addressArr = [];
 
     constructor(private DragulaService: DragulaService) {
+
         DragulaService.dropModel.subscribe((value) => {
             this.onDropModel(value.slice(1));
         });
@@ -22,18 +23,6 @@ export class Map2Component implements OnInit {
             this.onRemoveModel(value.slice(1));
         });
     }
-
-    // public initMap() {
-    //     var uluru = { lat: -25.363, lng: 131.044 };
-    //     var map = new google.maps.Map(document.getElementById('map'), {
-    //         zoom: 4,
-    //         center: uluru
-    //     });
-    //     var marker = new google.maps.Marker({
-    //         position: uluru,
-    //         map: map
-    //     });
-    // }
 
     public addAddress() {
         this.addressArr.push(this.newAddress);
@@ -54,6 +43,8 @@ export class Map2Component implements OnInit {
         // do something else
     }
 
+
     ngOnInit() {
+
     }
 }
