@@ -4,16 +4,9 @@
     </md-input-container>
     <ul [dragula]='"one-bag"' [dragulaModel]='addressArr'>
         <li *ngFor='let item of addressArr; let i = index' class="mat-elevation-z2">
-            <span>{{item}}</span>
+            <span>{{item.address}}</span>
             <i class="material-icons" (click)="delAddress(i)">delete</i>
         </li>
     </ul>
 </div>
-<sebm-google-map [latitude]="lat" [longitude]="lng">
-    <sebm-google-map-marker [latitude]="lat" [longitude]="lng" title="marker1" label="A">
-        <sebm-google-map-info-window>
-            My Content<br />
-            can be HTML
-        </sebm-google-map-info-window>
-    </sebm-google-map-marker>
-</sebm-google-map>
+<div id="map"></div>

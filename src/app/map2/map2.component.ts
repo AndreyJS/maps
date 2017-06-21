@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
+import { MapsAPILoader } from 'angular2-google-maps/core';
+
+declare var google: any;
 
 @Component({
     selector: 'app-map2',
@@ -8,13 +11,14 @@ import { DragulaService } from 'ng2-dragula';
 })
 
 export class Map2Component implements OnInit {
-    title: string = 'First map';
-    lat: number = 55.75222;
-    lng: number = 37.61556; 
+    private geocoder: any;
+    private map: any;
+    // lat: number = 55.75222;
+    // lng: number = 37.61556; 
     public newAddress: string;
     public addressArr = [];
 
-    constructor(private DragulaService: DragulaService) {
+    constructor(private DragulaService: DragulaService, private MapsAPILoader: MapsAPILoader) {
 
         DragulaService.dropModel.subscribe((value) => {
             this.onDropModel(value.slice(1));
@@ -24,9 +28,25 @@ export class Map2Component implements OnInit {
         });
     }
 
+    private geocode(address) {
+        this.geocoder.geocode({ 'address': address }, (results, status) => {
+            if (status === 'OK') {
+                this.map.setCenter(results[0].geometry.location);
+                let marker = new google.maps.Marker({
+                    map: this.map,
+                    draggable: true,
+                    position: results[0].geometry.location
+                });
+                this.addressArr.push({ address: this.newAddress, marker });   
+                this.newAddress = undefined; 
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+
     public addAddress() {
-        this.addressArr.push(this.newAddress);
-        this.newAddress = undefined;
+        this.geocode(this.newAddress);
     }
 
     public delAddress(i: number) {
@@ -43,8 +63,15 @@ export class Map2Component implements OnInit {
         // do something else
     }
 
-
     ngOnInit() {
-
+        this.MapsAPILoader.load().then(() => {
+            this.geocoder = new google.maps.Geocoder();
+            let latlng = new google.maps.LatLng(55.75222, 37.61556);
+            let options = {
+                zoom: 8,
+                center: latlng
+            }
+            this.map = new google.maps.Map(document.getElementById('map'), options);
+        });
     }
 }
