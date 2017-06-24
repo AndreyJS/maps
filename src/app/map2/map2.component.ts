@@ -32,12 +32,18 @@ export class Map2Component implements OnInit {
         this.geocoder.geocode({ 'address': address }, (results, status) => {
             if (status === 'OK') {
                 this.map.setCenter(results[0].geometry.location);
+                let infowindow = new google.maps.InfoWindow({
+                    content: address
+                })
                 let marker = new google.maps.Marker({
                     map: this.map,
                     draggable: true,
                     position: results[0].geometry.location
                 });
-                this.addressArr.push({ address: this.newAddress, marker });   
+                marker.addListener('click', () => {
+                    infowindow.open(this.map, marker);
+                });
+                this.addressArr.push({ address, marker });
                 this.newAddress = undefined; 
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
