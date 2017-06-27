@@ -13,10 +13,12 @@ declare var google: any;
 export class Map2Component implements OnInit {
     private geocoder: any;
     private map: any;
+    private path: any;
     // lat: number = 55.75222;
     // lng: number = 37.61556; 
     public newAddress: string;
     public addressArr = [];
+    // public lineArr = [];
 
     constructor(private DragulaService: DragulaService, private MapsAPILoader: MapsAPILoader) {
 
@@ -43,8 +45,19 @@ export class Map2Component implements OnInit {
                 marker.addListener('click', () => {
                     infowindow.open(this.map, marker);
                 });
+                marker.addListener('mouseup', (event) => {
+                    for (let i = 0; i < this.addressArr.length; i++) {
+                        if (marker === this.addressArr[i].marker) {
+                            this.path.getPath().removeAt(i);
+                            this.path.getPath().insertAt(i, event.latLng);
+                            console.log(this.path.getPath());
+                        }
+                    }
+                });
                 this.addressArr.push({ address, marker });
-                this.newAddress = undefined; 
+                // this.lineArr.push({ lat: marker.position.lat(), lng: marker.position.lng()});
+                let path = this.path.getPath();
+                path.push(marker.position);
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
@@ -53,20 +66,34 @@ export class Map2Component implements OnInit {
 
     public addAddress() {
         this.geocode(this.newAddress);
+        this.newAddress = undefined; 
     }
 
     public delAddress(i: number) {
+        this.addressArr[i].marker.setMap(null);
         this.addressArr.splice(i, 1);
+        this.path.getPath().removeAt(i);
     }
 
     private onDropModel(args) {
         let [el, target, source] = args;
-        // do something else
+        this.reDrawPath();
     }
 
     private onRemoveModel(args) {
         let [el, source] = args;
         // do something else
+    }
+
+    private reDrawPath() {
+        let pathArr = this.path.getPath();
+        for (let i = 0; i < this.addressArr.length; i++) {
+            if (this.addressArr[i].marker.position !== pathArr.getAt(i)) {
+                pathArr.removeAt(i);
+                pathArr.insertAt(i, this.addressArr[i].marker.position);
+                continue;
+            }
+        }
     }
 
     ngOnInit() {
@@ -78,6 +105,12 @@ export class Map2Component implements OnInit {
                 center: latlng
             }
             this.map = new google.maps.Map(document.getElementById('map'), options);
+            this.path = new google.maps.Polyline({
+                strokeColor: 'blue',
+                strokeOpacity: 0.7,
+                strokeWeight: 4
+            });
+            this.path.setMap(this.map);
         });
     }
 }
