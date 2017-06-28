@@ -14,11 +14,8 @@ export class Map2Component implements OnInit {
     private geocoder: any;
     private map: any;
     private path: any;
-    // lat: number = 55.75222;
-    // lng: number = 37.61556; 
     public newAddress: string;
     public addressArr = [];
-    // public lineArr = [];
 
     constructor(private DragulaService: DragulaService, private MapsAPILoader: MapsAPILoader) {
 
@@ -55,7 +52,6 @@ export class Map2Component implements OnInit {
                     }
                 });
                 this.addressArr.push({ address, marker });
-                // this.lineArr.push({ lat: marker.position.lat(), lng: marker.position.lng()});
                 let path = this.path.getPath();
                 path.push(marker.position);
             } else {
