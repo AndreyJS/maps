@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { MapsAPILoader } from 'angular2-google-maps/core';
 
@@ -11,6 +11,9 @@ declare var google: any;
 })
 
 export class Map2Component implements OnInit {
+    
+    @ViewChild('map') _map: ElementRef;
+
     private geocoder: any;
     private map: any;
     private path: any;
@@ -100,7 +103,8 @@ export class Map2Component implements OnInit {
                 zoom: 8,
                 center: latlng
             }
-            this.map = new google.maps.Map(document.getElementById('map'), options);
+            // this.map = new google.maps.Map(document.getElementById('map'), options);
+            this.map = new google.maps.Map(this._map.nativeElement, options);
             this.path = new google.maps.Polyline({
                 strokeColor: 'blue',
                 strokeOpacity: 0.7,
