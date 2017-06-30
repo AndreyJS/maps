@@ -1,5 +1,5 @@
 import { browser, by, element, protractor, Key, WebDriver } from 'protractor';
-
+//[TODO] потестить useAllAngular2AppRoots: true
 describe('Maps testing', () => {
     browser.waitForAngularEnabled(false);
     browser.get('/');
@@ -39,7 +39,7 @@ describe('Maps testing', () => {
         //     .dragAndDrop(addressArr.get(2).getWebElement(), addressArr.get(0).getWebElement())
         //     // .mouseUp()
         //     .perform();
-        browser.actions().mouseMove(dragElm).mouseDown().mouseMove(dropElm).perform();
+        browser.actions().mouseMove(dragElm.getWebElement()).mouseDown().mouseMove(dropElm.getWebElement()).perform();
         browser.actions().mouseMove({ x: 0, y: 5 }).perform();
         browser.actions().mouseUp().perform();
             
