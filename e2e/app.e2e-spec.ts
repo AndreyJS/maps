@@ -1,42 +1,55 @@
 import { browser, by, element, protractor, Key, WebDriver } from 'protractor';
 
 describe('Maps testing', () => {
-    let cities = ['moscow', 'protvino', 'обнинск'];
+    browser.waitForAngularEnabled(false);
+    browser.get('/');
+
+    let addressArr;
+    let cities = ['moscow', 'protvino', 'обнинск', 'таруса', 'зарайск'];
     let input = element(by.css('input'));
-    let addressArr = element(by.repeater('let item of addressArr; let i = index'));
+    
+    for (let i = 0; i < cities.length; i++) {
+        input.sendKeys(cities[i] + '\n');
+    }
 
-	beforeEach(() => {
-		browser.get('/');
-        for (let i = 0; i < cities.length; i++) {
-            input.sendKeys(cities[i] + '\n');
-        }
+	// beforeEach(() => {
+
+        addressArr = element.all(by.css('.mat-elevation-z2'));
+	// });
+
+	it('should to add five address', () => {
+        expect(addressArr.count()).toEqual(5);
 	});
 
-	it('should to add three address', () => {
-        expect(addressArr.count()).toEqual('3');
-	});
+	// it('should to add five markers', () => {
+    //     let markers = element.all(by.css('img[src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png"]'));
+    //     expect(markers.count()).toEqual(10);
+	// });
 
     it('should to delete address', () => {
-        addressArr.row[1].element(by.css('.material-icons')).click();
-        expect(addressArr.count()).toEqual('2');
+        addressArr.get(1).element(by.css('.material-icons')).click();
+        expect(addressArr.count()).toEqual(4);
     });
 
     it('should to move element', () => {
-        let allAddress = element.all(by.binding('item.address'));
-        expect(allAddress.get(0).getText()).toEqual('moscow');
-
-        browser.actions()
-            .dragAndDrop(addressArr.row[1], addressArr.row[2])
-            .mouseUp()
-            .perform();
-
-        expect(allAddress.get(0).getText()).toEqual('protvino');
+        let dragElm = addressArr.get(2);
+        let dropElm = addressArr.get(0);
+        // let driver = new WebDriver()
+        // browser.actions()
+        //     .dragAndDrop(addressArr.get(2).getWebElement(), addressArr.get(0).getWebElement())
+        //     // .mouseUp()
+        //     .perform();
+        browser.actions().mouseMove(dragElm).mouseDown().mouseMove(dropElm).perform();
+        browser.actions().mouseMove({ x: 0, y: 5 }).perform();
+        browser.actions().mouseUp().perform();
+            
+        expect(addressArr.get(0).getText()).toEqual('таруса');
     });
 
-    it('should have a infoWindow', () => {
-        let marker = element(by.css('img[src$="spotlight-poi.png"]'));
-        marker.click();
-        let info = element(by.xpath('/div[text() = "moscow"'));
-        expect(info.isPresent()).toBe(true);
-    });
+    // it('should have a infoWindow', () => {
+    //     let marker = element(by.css('img[src$="spotlight-poi.png"]'));
+    //     marker.click();
+    //     let info = element(by.xpath('/div[text() = "moscow"'));
+    //     expect(info.isPresent()).toBe(true);
+    // });
 });

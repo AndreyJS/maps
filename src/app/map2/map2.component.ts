@@ -30,12 +30,12 @@ export class Map2Component implements OnInit {
         });
     }
 
-    private geocode(address) {
-        this.geocoder.geocode({ 'address': address }, (results, status) => {
+    private geocode(obj) {
+        this.geocoder.geocode({ 'address': obj.address }, (results, status) => {
             if (status === 'OK') {
                 this.map.setCenter(results[0].geometry.location);
                 let infowindow = new google.maps.InfoWindow({
-                    content: address
+                    content: obj.address
                 })
                 let marker = new google.maps.Marker({
                     map: this.map,
@@ -54,7 +54,8 @@ export class Map2Component implements OnInit {
                         }
                     }
                 });
-                this.addressArr.push({ address, marker });
+                // this.addressArr.push({ address, marker });
+                obj.marker = marker;
                 let path = this.path.getPath();
                 path.push(marker.position);
             } else {
@@ -64,7 +65,9 @@ export class Map2Component implements OnInit {
     }
 
     public addAddress() {
-        this.geocode(this.newAddress);
+        let obj = { address: this.newAddress } ;
+        this.addressArr.push(obj);
+        this.geocode(obj);
         this.newAddress = undefined; 
     }
 
@@ -96,6 +99,7 @@ export class Map2Component implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this._map);
         this.MapsAPILoader.load().then(() => {
             this.geocoder = new google.maps.Geocoder();
             let latlng = new google.maps.LatLng(55.75222, 37.61556);
