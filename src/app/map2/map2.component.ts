@@ -14,19 +14,18 @@ export class Map2Component implements OnInit {
     
     @ViewChild('map') _map: ElementRef;
 
+    private arrow: any;
     private geocoder: any;
     private map: any;
     private path: any;
-    public newAddress: string;
+
     public addressArr = [];
+    public newAddress: string;
 
     constructor(private DragulaService: DragulaService, private MapsAPILoader: MapsAPILoader) {
 
         DragulaService.dropModel.subscribe((value) => {
             this.onDropModel(value.slice(1));
-        });
-        DragulaService.removeModel.subscribe((value) => {
-            this.onRemoveModel(value.slice(1));
         });
     }
 
@@ -54,11 +53,11 @@ export class Map2Component implements OnInit {
                         }
                     }
                 });
-                // this.addressArr.push({ address, marker });
                 obj.marker = marker;
                 let path = this.path.getPath();
                 path.push(marker.position);
             } else {
+                this.addressArr.pop();
                 alert('Geocode was not successful for the following reason: ' + status);
             }
         });
@@ -66,8 +65,8 @@ export class Map2Component implements OnInit {
 
     public addAddress() {
         let obj = { address: this.newAddress } ;
-        this.addressArr.push(obj);
         this.geocode(obj);
+        this.addressArr.push(obj);
         this.newAddress = undefined; 
     }
 
@@ -80,11 +79,6 @@ export class Map2Component implements OnInit {
     private onDropModel(args) {
         let [el, target, source] = args;
         this.reDrawPath();
-    }
-
-    private onRemoveModel(args) {
-        let [el, source] = args;
-        // do something else
     }
 
     private reDrawPath() {
@@ -107,9 +101,19 @@ export class Map2Component implements OnInit {
                 zoom: 8,
                 center: latlng
             }
-            // this.map = new google.maps.Map(document.getElementById('map'), options);
+            
             this.map = new google.maps.Map(this._map.nativeElement, options);
+            let arrow = {
+                path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+            };
             this.path = new google.maps.Polyline({
+                icons: [{
+                    icon: arrow,
+                    offset: '33%'
+                }, {
+                    icon: arrow,
+                    offset: '66%'
+                }],
                 strokeColor: 'blue',
                 strokeOpacity: 0.7,
                 strokeWeight: 4

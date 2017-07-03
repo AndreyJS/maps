@@ -5,7 +5,7 @@ describe('Maps testing', () => {
     browser.get('/');
 
     let addressArr;
-    let cities = ['moscow', 'protvino', 'обнинск', 'таруса', 'зарайск'];
+    let cities = ['chehov', 'protvino', 'обнинск', 'таруса', 'серпухов'];
     let input = element(by.css('input'));
     
     for (let i = 0; i < cities.length; i++) {
@@ -17,14 +17,14 @@ describe('Maps testing', () => {
         addressArr = element.all(by.css('.mat-elevation-z2'));
 	// });
 
-	it('should to add five address', () => {
+	it('should to add five addresses', () => {
         expect(addressArr.count()).toEqual(5);
 	});
 
-	// it('should to add five markers', () => {
-    //     let markers = element.all(by.css('img[src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png"]'));
-    //     expect(markers.count()).toEqual(10);
-	// });
+	it('should to add five markers', () => {
+        let markers = element.all(by.deepCss('div.gmnoprint img[src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png"]'));
+        expect(markers.count()).toEqual(5);
+	});
 
     it('should to delete address', () => {
         addressArr.get(1).element(by.css('.material-icons')).click();
@@ -34,22 +34,22 @@ describe('Maps testing', () => {
     it('should to move element', () => {
         let dragElm = addressArr.get(2);
         let dropElm = addressArr.get(0);
-        // let driver = new WebDriver()
+        browser.actions()
+            .mouseMove(dragElm).mouseDown().mouseMove( {x: 100, y:0}).mouseUp()
+            // .mouseUp()
+            .perform();
         // browser.actions()
-        //     .dragAndDrop(addressArr.get(2).getWebElement(), addressArr.get(0).getWebElement())
-        //     // .mouseUp()
-        //     .perform();
-        browser.actions().mouseMove(dragElm.getWebElement()).mouseDown().mouseMove(dropElm.getWebElement()).perform();
-        browser.actions().mouseMove({ x: 0, y: 5 }).perform();
-        browser.actions().mouseUp().perform();
-            
-        expect(addressArr.get(0).getText()).toEqual('таруса');
+        //     .mouseMove(dragElm.getWebElement())
+        //     .mouseDown()
+        //     .mouseMove(dropElm.getWebElement())
+        //     .mouseMove({ x: 0, y: 5 })
+        //     .mouseUp().perform();
     });
 
-    // it('should have a infoWindow', () => {
-    //     let marker = element(by.css('img[src$="spotlight-poi.png"]'));
-    //     marker.click();
-    //     let info = element(by.xpath('/div[text() = "moscow"'));
-    //     expect(info.isPresent()).toBe(true);
-    // });
+    it('should have a infoWindow', () => {
+        let marker = element(by.deepCss('div.gmnoprint img[src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png"]')).element(by.xpath(".."));
+        marker.click();
+        let info = element(by.xpath('//div[text() = "chehov"]'));
+        expect(info.isPresent()).toBe(true);
+    });
 });
