@@ -1,7 +1,7 @@
 import { browser, by, element, protractor, Key, WebDriver } from 'protractor';
 //[TODO] потестить useAllAngular2AppRoots: true
 describe('Maps testing', () => {
-    browser.waitForAngularEnabled(false);
+    // browser.waitForAngularEnabled(false);
     browser.get('/');
 
     let addressArr;
