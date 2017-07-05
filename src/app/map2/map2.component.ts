@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { MapsAPILoader } from 'angular2-google-maps/core';
+import { Observable } from 'rxjs/Rx';
 
 declare var google: any;
 
@@ -20,6 +21,7 @@ export class Map2Component implements OnInit {
     private path: any;
 
     public addressArr = [];
+    public addressArrObs: Observable<Array<any>>;
     public newAddress: string;
 
     constructor(private DragulaService: DragulaService, private MapsAPILoader: MapsAPILoader) {
@@ -29,12 +31,20 @@ export class Map2Component implements OnInit {
         });
     }
 
-    private geocode(obj) {
-        this.geocoder.geocode({ 'address': obj.address }, (results, status) => {
+    getAddressArr(obj?: any) {
+        if (obj) {
+            this.addressArr.push(obj);
+            this.newAddress = '';
+        }
+        return Observable.interval(0).map(i => this.addressArr ? this.addressArr : undefined);
+    }
+
+    private geocode(address) {
+        this.geocoder.geocode({ 'address': address }, (results, status) => {
             if (status === 'OK') {
                 this.map.setCenter(results[0].geometry.location);
                 let infowindow = new google.maps.InfoWindow({
-                    content: obj.address
+                    content: address
                 })
                 let marker = new google.maps.Marker({
                     map: this.map,
@@ -53,21 +63,22 @@ export class Map2Component implements OnInit {
                         }
                     }
                 });
-                obj.marker = marker;
+
+                this.addressArrObs = this.getAddressArr({ address, marker });
+
                 let path = this.path.getPath();
                 path.push(marker.position);
             } else {
-                this.addressArr.pop();
                 alert('Geocode was not successful for the following reason: ' + status);
             }
         });
     }
 
     public addAddress() {
-        let obj = { address: this.newAddress } ;
-        this.geocode(obj);
-        this.addressArr.push(obj);
-        this.newAddress = undefined; 
+        // let obj = { address: this.newAddress } ;
+        this.geocode(this.newAddress);
+        // this.addressArr.push(obj);
+        // this.newAddress = undefined; 
     }
 
     public delAddress(i: number) {
@@ -93,7 +104,7 @@ export class Map2Component implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this._map);
+        this.addressArrObs = this.getAddressArr();
         this.MapsAPILoader.load().then(() => {
             this.geocoder = new google.maps.Geocoder();
             let latlng = new google.maps.LatLng(55.75222, 37.61556);
