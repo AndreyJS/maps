@@ -16,14 +16,12 @@ export class MapsService extends GoogleMapsAPIWrapper {
         console.log('Getting Address - ', address);
         let geocoder = new google.maps.Geocoder();
         return Observable.create(observer => {
-            geocoder.geocode( { 'address': address}, function(results, status) {
+            geocoder.geocode( { 'address': address }, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     observer.next(results[0].geometry.location);
                     observer.complete();
                 } else {
                     console.log('Error - ', results, ' & Status - ', status);
-                    observer.next({});
-                    observer.complete();
                 }
             });
         })

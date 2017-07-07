@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { MapsAPILoader } from 'angular2-google-maps/core';
-import { MapsService } from './map/map2.service';
+import { MapsService } from './map/map.service';
 
 declare var google: any;
 
@@ -25,6 +25,7 @@ export class AppComponent {
     public addAddress() {
         this._MapsService.getLatLan(this.newAddress)
             .subscribe(result => {
+                debugger
                 this._NgZone.run(() => {
                     this.map.setCenter(result);
                     let infowindow = new google.maps.InfoWindow({
@@ -49,12 +50,13 @@ export class AppComponent {
                     });
                     this.addressArr.push({ address: this.newAddress, marker });
                     this.newAddress = '';
-
                     let path = this.path.getPath();
                     path.push(marker.position);
                 });
             },
-            error => console.log(error));
+            error => console.log(error),
+            () => {console.log('Geo done')});
+            
     }
 
     ngOnInit() {

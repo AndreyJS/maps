@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
-import { MapsService } from '../map/map2.service';
+import { MapsService } from '../map/map.service';
 
 @Component({
     selector: 'app-list',
