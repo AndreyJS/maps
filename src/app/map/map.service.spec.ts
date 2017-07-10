@@ -14,6 +14,6 @@ describe('MapsService', () => {
     });
 
     it('should load MapsService', inject([MapsService], (_Maps: MapsService) => {
-        expect(_Maps).toBeTruthy();
+        expect(_Maps.getLatLan).toBeTruthy();
     }));
 });
