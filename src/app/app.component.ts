@@ -15,10 +15,10 @@ export class AppComponent {
     @ViewChild('map') _map: ElementRef;
 
     private map: any;   
-    private path: any;
     
     public addressArr = [];
     public newAddress: string;
+    public path: any;
 
     constructor(private _MapsAPILoader: MapsAPILoader, private _MapsService: MapsService, private _NgZone: NgZone) {}
 
