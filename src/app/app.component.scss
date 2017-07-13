@@ -9,6 +9,10 @@
     min-width: 230px;
 }
 
+.input > md-input-container {
+    width: 100%;
+}
+
 #map {
     width: 80vw;
     height: 95vh;

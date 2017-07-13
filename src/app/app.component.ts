@@ -25,16 +25,17 @@ export class AppComponent {
     public addAddress() {
         this._MapsService.getLatLan(this.newAddress)
             .subscribe(result => {
-                debugger
+                let latLng = result.geometry.location;
+                let address = result.formatted_address;
                 this._NgZone.run(() => {
-                    this.map.setCenter(result);
+                    this.map.setCenter(latLng);
                     let infowindow = new google.maps.InfoWindow({
-                        content: this.newAddress
+                        content: address
                     })
                     let marker = new google.maps.Marker({
                         map: this.map,
                         draggable: true,
-                        position: result
+                        position: latLng
                     });
                     marker.addListener('click', () => {
                         infowindow.open(this.map, marker);
@@ -48,19 +49,21 @@ export class AppComponent {
                             }
                         }
                     });
-                    this.addressArr.push({ address: this.newAddress, marker });
+                    this.addressArr.push({ address, marker });
                     this.newAddress = '';
                     let path = this.path.getPath();
                     path.push(marker.position);
                 });
             },
             error => console.log(error),
-            () => {console.log('Geo done')});
-            
+            () => {console.log('Geo done')});  
     }
 
     ngOnInit() {
         this._MapsAPILoader.load().then(() => {
+            let arrow = {
+                path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+            };
             let latlng = new google.maps.LatLng(55.75222, 37.61556);
             let options = {
                 zoom: 8,
@@ -68,9 +71,6 @@ export class AppComponent {
             }
             
             this.map = new google.maps.Map(this._map.nativeElement, options);
-            let arrow = {
-                path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-            };
             this.path = new google.maps.Polyline({
                 icons: [{
                     icon: arrow,

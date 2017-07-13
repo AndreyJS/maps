@@ -20,8 +20,7 @@ export class ListComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     private reDrawPath(addressArr: Array<any>, path: any) {
         let pathArr = path.getPath();
