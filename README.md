@@ -4,10 +4,10 @@
 
 ## Использованные технологии
 
- * [Angular CLI](https://github.com/angular/angular-cli)
+ * [Angular CLI](https://cli.angular.io/)
  * [Google Maps API](https://developers.google.com/maps/documentation/javascript/?hl=ru)
- * [Angular Google Maps] (https://github.com/SebastianM/angular-google-maps)
- * [Dragula] (https://github.com/valor-software/ng2-dragula) 
+ * [Angular Google Maps](https://github.com/SebastianM/angular-google-maps)
+ * [Dragula](https://github.com/valor-software/ng2-dragula) 
 
 ## Установка
 
