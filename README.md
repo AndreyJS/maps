@@ -14,6 +14,9 @@
 ```
 $ git clone https://github.com/AndreyJS/maps.git
 $ cd maps
+$ npm uninstall -g @angular/cli
+$ npm cache clean
+$ npm install -g @angular/cli@latest
 $ npm install
 ```
 
