@@ -1,3 +1,8 @@
+#map {
+    width: 80vw;
+    height: 95vh;
+}
+
 .main {
     display: flex;
     flex-direction: row;
@@ -13,7 +18,10 @@
     width: 100%;
 }
 
-#map {
-    width: 80vw;
-    height: 95vh;
+.git {
+    position: absolute;
+    right: 1%;
+    top: 2%;
+    width: 2%;
+    height: 4%;
 }
