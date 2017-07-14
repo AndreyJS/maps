@@ -33,7 +33,7 @@ describe('Maps testing', () => {
     it('should have a infoWindow', () => {
         let marker = element(by.deepCss('div.gmnoprint img[src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png"]')).element(by.xpath(".."));
         marker.click();
-        let info = element(by.xpath('//div[text() = "chehov"]'));
+        let info = element(by.xpath('//div[text() = "Чехов"]'));
         expect(info.isPresent()).toBe(true);
     });
 });
