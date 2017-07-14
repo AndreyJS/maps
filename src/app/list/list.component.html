@@ -1,0 +1,6 @@
+<ul [dragula]='"one-bag"' [dragulaModel]='addressArr'>
+    <li *ngFor='let item of addressArr; let i = index' class="mat-elevation-z2" draggable="true">
+        <span>{{item?.address}}</span>
+        <i class="material-icons" (click)="delAddress(i)">delete</i>
+    </li>
+</ul>

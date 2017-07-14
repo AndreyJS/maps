@@ -1,2 +1,9 @@
-<!--<app-dragula></app-dragula>-->
-<app-map2></app-map2>
+<div class="main">
+    <div class="input">
+        <md-input-container>
+            <input mdInput type="text" placeholder="Введите адрес" [(ngModel)]="newAddress" (keyup.enter)="addAddress()">
+        </md-input-container>
+        <app-list [addressArr]="addressArr" [path]="path"></app-list>
+    </div>
+    <div #map id="map"></div>
+</div>
