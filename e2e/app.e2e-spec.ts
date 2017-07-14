@@ -5,7 +5,7 @@ describe('Maps testing', () => {
     browser.get('/');
 
     let addressArr;
-    let cities = ['chehov', 'protvino', 'обнинск', 'таруса', 'серпухов'];
+    let cities = ['chehov', 'protvino lenina 9', 'обнинск', 'таруса ленина 10', 'серпухов'];
     let input = element(by.css('input'));
     
     for (let i = 0; i < cities.length; i++) {
@@ -33,7 +33,7 @@ describe('Maps testing', () => {
     it('should have a infoWindow', () => {
         let marker = element(by.deepCss('div.gmnoprint img[src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png"]')).element(by.xpath(".."));
         marker.click();
-        let info = element(by.xpath('//div[text() = "Чехов"]'));
+        let info = element(by.xpath('//div[text() = "Чехов, Московская обл., Россия"]'));
         expect(info.isPresent()).toBe(true);
     });
 });
